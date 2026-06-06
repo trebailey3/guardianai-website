@@ -1,0 +1,642 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>GuardianAI — AI Scam & Fraud Defense</title>
+  <meta name="description" content="GuardianAI protects you from scams, phishing, fraud, and suspicious links with real-time AI-powered defense. Scan. Verify. Stay Safe." />
+  <link rel="icon" href="App_Icon.png" type="image/png" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:ital,wght@0,300;0,400;0,500;1,300&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --navy:  #07111f;
+      --navy2: #0c1a2e;
+      --navy3: #0f2040;
+      --teal:  #35d0c0;
+      --teal2: #2ae8c8;
+      --cyan:  #35d0ff;
+      --gold:  #f7c948;
+      --text:  #f0f4fb;
+      --muted: #8fa8c8;
+      --border: rgba(53,208,192,0.18);
+    }
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+    body {
+      font-family: 'DM Sans', sans-serif;
+      background: var(--navy);
+      color: var(--text);
+      overflow-x: hidden;
+      line-height: 1.65;
+    }
+
+    /* ── NAV ── */
+    nav {
+      position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 0 5vw; height: 68px;
+      background: rgba(7,17,31,0.88); backdrop-filter: blur(18px);
+      border-bottom: 1px solid var(--border);
+    }
+    .nav-logo { display: flex; align-items: center; gap: 11px; text-decoration: none; }
+    .nav-logo img { width: 36px; height: 36px; border-radius: 9px; }
+    .nav-logo span {
+      font-family: 'Syne', sans-serif; font-weight: 800; font-size: 1.25rem;
+      background: linear-gradient(120deg, var(--teal2), var(--cyan));
+      -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
+    }
+    .nav-links { display: flex; align-items: center; gap: 32px; list-style: none; }
+    .nav-links a { text-decoration: none; color: var(--muted); font-size: 0.95rem; transition: color 0.2s; }
+    .nav-links a:hover { color: var(--teal2); }
+    .nav-cta {
+      background: linear-gradient(135deg, var(--teal), var(--cyan)) !important;
+      color: var(--navy) !important; font-weight: 700 !important;
+      padding: 9px 22px; border-radius: 50px; font-size: 0.9rem !important;
+      transition: opacity 0.2s, transform 0.2s !important;
+    }
+    .nav-cta:hover { opacity: 0.88; transform: translateY(-1px); color: var(--navy) !important; }
+    .nav-toggle { display: none; flex-direction: column; gap: 5px; cursor: pointer; background: none; border: none; padding: 4px; }
+    .nav-toggle span { display: block; width: 24px; height: 2px; background: var(--muted); border-radius: 2px; }
+
+    /* ── HERO ── */
+    #hero {
+      min-height: 100vh; display: flex; flex-direction: column;
+      align-items: center; justify-content: center;
+      text-align: center; padding: 120px 6vw 80px; position: relative; overflow: hidden;
+    }
+    .hero-bg {
+      position: absolute; inset: 0;
+      background:
+        radial-gradient(ellipse 80% 60% at 50% -10%, rgba(53,208,192,0.18) 0%, transparent 65%),
+        radial-gradient(ellipse 50% 40% at 15% 80%, rgba(53,208,255,0.10) 0%, transparent 55%),
+        linear-gradient(180deg, #07111f 0%, #091828 100%);
+      z-index: -1;
+    }
+    .scan-line {
+      position: absolute; top: 0; left: 0; right: 0; height: 2px;
+      background: linear-gradient(90deg, transparent, var(--teal2), transparent);
+      animation: scanDown 7s ease-in-out infinite; z-index: 1; pointer-events: none;
+    }
+    @keyframes scanDown { 0%{top:0%;opacity:0} 5%{opacity:1} 95%{opacity:1} 100%{top:100%;opacity:0} }
+
+    .hero-badge {
+      display: inline-flex; align-items: center; gap: 8px;
+      background: rgba(53,208,192,0.12); border: 1px solid rgba(53,208,192,0.3);
+      color: var(--teal2); font-size: 0.82rem; font-weight: 600;
+      letter-spacing: 0.08em; text-transform: uppercase;
+      padding: 6px 16px; border-radius: 50px; margin-bottom: 28px;
+      animation: fadeUp 0.6s ease both;
+    }
+    .hero-badge::before {
+      content: ''; width: 7px; height: 7px; border-radius: 50%;
+      background: var(--teal2); box-shadow: 0 0 8px var(--teal2); animation: pulse 2s infinite;
+    }
+    @keyframes pulse { 0%,100%{opacity:1;transform:scale(1)} 50%{opacity:0.5;transform:scale(1.4)} }
+
+    .hero-feature-img {
+      width: min(680px, 90vw); border-radius: 20px;
+      box-shadow: 0 0 80px rgba(53,208,192,0.25), 0 40px 80px rgba(0,0,0,0.5);
+      margin-bottom: 44px; animation: fadeUp 0.8s 0.1s ease both;
+      border: 1px solid rgba(53,208,192,0.2);
+    }
+    .hero-h1 {
+      font-family: 'Syne', sans-serif; font-size: clamp(2.6rem, 6vw, 5rem);
+      font-weight: 800; line-height: 1.05; letter-spacing: -0.02em;
+      margin-bottom: 20px; animation: fadeUp 0.7s 0.2s ease both;
+    }
+    .gradient-text {
+      background: linear-gradient(120deg, var(--teal2) 0%, var(--cyan) 60%, #a8f0ff 100%);
+      -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
+    }
+    .hero-sub {
+      font-size: clamp(1rem, 2.2vw, 1.25rem); color: var(--muted);
+      max-width: 580px; margin: 0 auto 40px; font-weight: 300;
+      animation: fadeUp 0.7s 0.35s ease both;
+    }
+    .hero-actions {
+      display: flex; gap: 16px; flex-wrap: wrap; justify-content: center;
+      animation: fadeUp 0.7s 0.45s ease both;
+    }
+    @keyframes fadeUp { from{opacity:0;transform:translateY(28px)} to{opacity:1;transform:translateY(0)} }
+
+    /* ── BUTTONS ── */
+    .btn-apple {
+      display: inline-flex; align-items: center; gap: 10px;
+      background: #000; color: #fff;
+      font-family: 'Syne', sans-serif; font-weight: 700; font-size: 0.95rem;
+      padding: 14px 28px; border-radius: 14px; text-decoration: none;
+      border: 1px solid rgba(255,255,255,0.2);
+      box-shadow: 0 8px 28px rgba(0,0,0,0.4);
+      transition: transform 0.2s, box-shadow 0.2s;
+    }
+    .btn-apple:hover { transform: translateY(-3px); box-shadow: 0 14px 40px rgba(0,0,0,0.5); }
+    .btn-google {
+      display: inline-flex; align-items: center; gap: 10px;
+      background: #fff; color: #1a1a1a;
+      font-family: 'Syne', sans-serif; font-weight: 700; font-size: 0.95rem;
+      padding: 14px 28px; border-radius: 14px; text-decoration: none;
+      box-shadow: 0 8px 28px rgba(0,0,0,0.25);
+      transition: transform 0.2s, box-shadow 0.2s;
+    }
+    .btn-google:hover { transform: translateY(-3px); box-shadow: 0 14px 40px rgba(0,0,0,0.35); }
+    .btn-store-text { text-align: left; line-height: 1.2; }
+    .btn-store-text small { display: block; font-size: 0.68rem; font-family: 'DM Sans', sans-serif; font-weight: 400; opacity: 0.7; }
+    .btn-store-text strong { font-size: 1rem; }
+    .store-hero-note {
+      margin-top: 18px; color: var(--muted); font-size: 0.82rem;
+      animation: fadeUp 0.7s 0.55s ease both;
+    }
+
+    /* ── TRUST BAR ── */
+    .trust-bar {
+      background: rgba(255,255,255,0.03);
+      border-top: 1px solid var(--border); border-bottom: 1px solid var(--border);
+      padding: 22px 6vw;
+      display: flex; align-items: center; justify-content: center; gap: 48px; flex-wrap: wrap;
+    }
+    .trust-item { display: flex; align-items: center; gap: 10px; color: var(--muted); font-size: 0.9rem; }
+    .trust-item svg { width: 20px; height: 20px; color: var(--teal2); flex-shrink: 0; }
+
+    /* ── SECTIONS ── */
+    section { position: relative; z-index: 1; }
+    .section-label {
+      display: inline-block; color: var(--teal2); font-size: 0.78rem; font-weight: 700;
+      letter-spacing: 0.12em; text-transform: uppercase; margin-bottom: 14px;
+    }
+    .section-title {
+      font-family: 'Syne', sans-serif; font-size: clamp(1.9rem, 4vw, 3rem);
+      font-weight: 800; letter-spacing: -0.02em; line-height: 1.1; margin-bottom: 18px;
+    }
+    .section-sub { color: var(--muted); font-size: 1.05rem; max-width: 560px; font-weight: 300; }
+
+    /* ── APP SCREENSHOTS ── */
+    #screenshots { padding: 100px 0; overflow: hidden; }
+    .screenshots-header { text-align: center; padding: 0 6vw; margin-bottom: 56px; }
+    .screenshots-header .section-sub { margin: 0 auto; }
+
+    .phone-showcase {
+      display: flex; gap: 28px; align-items: flex-end; justify-content: center;
+      padding: 20px 40px 40px; overflow-x: auto; scroll-snap-type: x mandatory;
+      scrollbar-width: none; -ms-overflow-style: none;
+    }
+    .phone-showcase::-webkit-scrollbar { display: none; }
+
+    .phone-frame {
+      flex-shrink: 0; scroll-snap-align: center;
+      display: flex; flex-direction: column; align-items: center; gap: 16px;
+      transition: transform 0.3s;
+    }
+    .phone-frame:hover { transform: translateY(-12px); }
+    .phone-frame.center { transform: translateY(-20px); }
+    .phone-frame.center:hover { transform: translateY(-30px); }
+
+    .phone-shell {
+      width: 200px; position: relative;
+      background: #0a1628;
+      border-radius: 36px;
+      border: 2px solid rgba(53,208,192,0.3);
+      box-shadow:
+        0 0 0 1px rgba(0,0,0,0.8),
+        0 30px 60px rgba(0,0,0,0.6),
+        0 0 40px rgba(53,208,192,0.12);
+      overflow: hidden;
+      padding: 10px;
+    }
+    .phone-shell::before {
+      content: ''; position: absolute; top: 10px; left: 50%; transform: translateX(-50%);
+      width: 60px; height: 6px; background: #1a2d4a; border-radius: 4px; z-index: 10;
+    }
+    .phone-shell img {
+      width: 100%; border-radius: 26px; display: block;
+    }
+    .phone-label {
+      font-size: 0.8rem; font-weight: 600; color: var(--muted);
+      text-align: center; letter-spacing: 0.04em;
+    }
+    .phone-label.highlight { color: var(--teal2); }
+
+    .screenshots-dots {
+      display: flex; gap: 8px; justify-content: center; margin-top: 36px;
+    }
+    .screenshots-dots span {
+      width: 8px; height: 8px; border-radius: 50%;
+      background: rgba(53,208,192,0.25); cursor: pointer; transition: 0.2s;
+    }
+    .screenshots-dots span.active { background: var(--teal2); width: 24px; border-radius: 4px; }
+
+    /* ── FEATURES ── */
+    #features { padding: 100px 6vw; }
+    .features-header { text-align: center; margin-bottom: 64px; }
+    .features-grid {
+      display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 24px; max-width: 1100px; margin: 0 auto;
+    }
+    .feature-card {
+      background: linear-gradient(145deg, rgba(15,32,64,0.9), rgba(7,17,31,0.95));
+      border: 1px solid var(--border); border-radius: 20px; padding: 32px 28px;
+      transition: transform 0.3s, border-color 0.3s, box-shadow 0.3s; position: relative; overflow: hidden;
+    }
+    .feature-card::before {
+      content: ''; position: absolute; top: -40%; left: -40%; width: 80%; height: 80%;
+      background: radial-gradient(circle, rgba(53,208,192,0.1) 0%, transparent 70%);
+      opacity: 0; transition: opacity 0.4s;
+    }
+    .feature-card:hover { transform: translateY(-6px); border-color: rgba(53,208,192,0.4); box-shadow: 0 20px 60px rgba(0,0,0,0.3); }
+    .feature-card:hover::before { opacity: 1; }
+    .feature-icon {
+      width: 52px; height: 52px;
+      background: linear-gradient(135deg, rgba(53,208,192,0.2), rgba(53,208,255,0.1));
+      border: 1px solid rgba(53,208,192,0.3); border-radius: 14px;
+      display: flex; align-items: center; justify-content: center; margin-bottom: 20px; font-size: 1.5rem;
+    }
+    .feature-card h3 { font-family: 'Syne', sans-serif; font-size: 1.1rem; font-weight: 700; margin-bottom: 10px; }
+    .feature-card p { color: var(--muted); font-size: 0.94rem; line-height: 1.6; }
+
+    /* ── HOW IT WORKS ── */
+    #how {
+      padding: 100px 6vw;
+      background: linear-gradient(180deg, transparent, rgba(15,32,64,0.4), transparent);
+    }
+    .how-inner { max-width: 900px; margin: 0 auto; }
+    .how-header { text-align: center; margin-bottom: 64px; }
+    .steps { display: flex; flex-direction: column; gap: 0; position: relative; }
+    .steps::before {
+      content: ''; position: absolute; left: 31px; top: 40px; bottom: 40px; width: 2px;
+      background: linear-gradient(180deg, var(--teal2), var(--cyan), transparent);
+    }
+    .step { display: flex; gap: 32px; align-items: flex-start; padding: 32px 0; }
+    .step-num {
+      width: 64px; height: 64px; flex-shrink: 0;
+      background: linear-gradient(135deg, var(--teal), var(--cyan)); border-radius: 50%;
+      display: flex; align-items: center; justify-content: center;
+      font-family: 'Syne', sans-serif; font-weight: 800; font-size: 1.3rem; color: var(--navy);
+      box-shadow: 0 0 24px rgba(53,208,192,0.4); position: relative; z-index: 1;
+    }
+    .step-content h3 { font-family: 'Syne', sans-serif; font-size: 1.2rem; font-weight: 700; margin-bottom: 8px; padding-top: 14px; }
+    .step-content p { color: var(--muted); font-size: 0.95rem; }
+
+    /* ── THREATS ── */
+    #threats { padding: 100px 6vw; }
+    .threats-header { text-align: center; margin-bottom: 56px; }
+    .threats-grid {
+      display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 16px; max-width: 1000px; margin: 0 auto;
+    }
+    .threat-pill {
+      display: flex; align-items: center; gap: 12px;
+      background: rgba(15,32,64,0.7); border: 1px solid var(--border);
+      border-radius: 14px; padding: 18px 20px; transition: background 0.2s, border-color 0.2s;
+    }
+    .threat-pill:hover { background: rgba(53,208,192,0.08); border-color: rgba(53,208,192,0.35); }
+    .threat-pill .icon { font-size: 1.4rem; }
+    .threat-pill span { font-size: 0.94rem; font-weight: 500; }
+
+    /* ── CTA ── */
+    #cta {
+      padding: 100px 6vw; text-align: center; position: relative; overflow: hidden;
+    }
+    #cta::before {
+      content: ''; position: absolute; inset: 0;
+      background: radial-gradient(ellipse 70% 80% at 50% 50%, rgba(53,208,192,0.13) 0%, transparent 70%);
+      pointer-events: none;
+    }
+
+    /* ── FOOTER ── */
+    footer {
+      background: rgba(0,0,0,0.35); border-top: 1px solid var(--border); padding: 52px 6vw 32px;
+    }
+    .footer-inner { max-width: 1100px; margin: 0 auto; }
+    .footer-top {
+      display: grid; grid-template-columns: 1.6fr repeat(3, 1fr);
+      gap: 48px; margin-bottom: 48px;
+    }
+    .footer-brand p { color: var(--muted); font-size: 0.9rem; margin-top: 14px; max-width: 280px; line-height: 1.6; }
+    .footer-col h4 {
+      font-family: 'Syne', sans-serif; font-weight: 700; font-size: 0.9rem;
+      letter-spacing: 0.06em; text-transform: uppercase; color: var(--teal2); margin-bottom: 16px;
+    }
+    .footer-col ul { list-style: none; display: flex; flex-direction: column; gap: 10px; }
+    .footer-col ul li a { text-decoration: none; color: var(--muted); font-size: 0.92rem; transition: color 0.2s; }
+    .footer-col ul li a:hover { color: var(--teal2); }
+    .footer-bottom {
+      border-top: 1px solid var(--border); padding-top: 28px;
+      display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 16px;
+    }
+    .footer-bottom p { color: var(--muted); font-size: 0.86rem; }
+    .social-links { display: flex; gap: 14px; }
+    .social-links a {
+      width: 38px; height: 38px; border-radius: 10px;
+      background: rgba(255,255,255,0.06); border: 1px solid var(--border);
+      display: flex; align-items: center; justify-content: center;
+      color: var(--muted); font-size: 1rem; text-decoration: none;
+      transition: background 0.2s, border-color 0.2s, color 0.2s;
+    }
+    .social-links a:hover { background: rgba(53,208,192,0.15); border-color: var(--teal2); color: var(--teal2); }
+
+    /* ── RESPONSIVE ── */
+    @media (max-width: 900px) { .footer-top { grid-template-columns: 1fr 1fr; } }
+    @media (max-width: 640px) {
+      .nav-links { display: none; flex-direction: column; position: absolute; top: 68px; left: 0; right: 0; background: rgba(7,17,31,0.97); border-bottom: 1px solid var(--border); padding: 20px 5vw 28px; gap: 20px; }
+      .nav-links.open { display: flex; }
+      .nav-toggle { display: flex; }
+      .footer-top { grid-template-columns: 1fr; gap: 28px; }
+      .steps::before { left: 27px; }
+      .step-num { width: 56px; height: 56px; font-size: 1.1rem; }
+      .phone-shell { width: 160px; }
+      .trust-bar { gap: 24px; }
+    }
+  </style>
+</head>
+<body>
+
+  <nav>
+    <a href="index.html" class="nav-logo">
+      <img src="App_Icon.png" alt="GuardianAI" />
+      <span>GuardianAI</span>
+    </a>
+    <ul class="nav-links" id="navLinks">
+      <li><a href="#features">Features</a></li>
+      <li><a href="#screenshots">App Screenshots</a></li>
+      <li><a href="#how">How It Works</a></li>
+      <li><a href="contact.html">Contact</a></li>
+      <li><a href="privacy.html" class="nav-cta">Legal</a></li>
+    </ul>
+    <button class="nav-toggle" id="navToggle" aria-label="Toggle menu">
+      <span></span><span></span><span></span>
+    </button>
+  </nav>
+
+  <!-- HERO -->
+  <section id="hero">
+    <div class="hero-bg"></div>
+    <div class="scan-line"></div>
+    <div class="hero-badge">Real-Time AI Protection</div>
+    <img src="Feature_Graphic.png" alt="GuardianAI — Scan. Verify. Stay Safe." class="hero-feature-img" />
+    <h1 class="hero-h1">
+      Your Shield Against<br>
+      <span class="gradient-text">Scams &amp; Fraud</span>
+    </h1>
+    <p class="hero-sub">
+      GuardianAI uses advanced AI to detect scams, phishing links, suspicious QR codes, fake messages, and fraud attempts — before they can harm you.
+    </p>
+    <div class="hero-actions">
+      <a href="https://apps.apple.com/us/app/guardianai-scam-defense/id6753998288" target="_blank" rel="noopener" class="btn-apple">
+        <svg width="26" height="26" viewBox="0 0 24 24" fill="white"><path d="M17.05 20.28c-.98.95-2.05.8-3.08.35-1.09-.46-2.09-.48-3.24 0-1.44.62-2.2.44-3.06-.35C2.79 15.25 3.51 7.7 9.05 7.4c1.35.07 2.29.74 3.08.8 1.18-.24 2.31-.93 3.57-.84 1.51.12 2.65.72 3.4 1.8-3.12 1.87-2.38 5.98.48 7.13-.57 1.39-1.32 2.76-2.54 4zm-3.11-17.6c.06 2.28-1.67 4.15-3.6 3.95-.27-1.97 1.73-4.12 3.6-3.95z"/></svg>
+        <div class="btn-store-text"><small>Download on the</small><strong>App Store</strong></div>
+      </a>
+      <a href="https://play.google.com/store/apps/details?id=com.guardianai" target="_blank" rel="noopener" class="btn-google">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none"><path d="M3.18 23.76c.3.17.64.24.99.2l12.6-12.6-3.17-3.16L3.18 23.76z" fill="#EA4335"/><path d="M20.28 11.49L17.6 9.9 14.43 6.7l2.7-2.7c.44-.44 1.15-.44 1.6 0l2.55 2.55c.44.44.44 1.16 0 1.6l-.99.84-.01.5z" fill="#FBBC04"/><path d="M2.5 1.08L14.43 13l-3.16 3.17L.5 5.66A.99.99 0 0 1 .5 4.09L2.5 1.08z" fill="#4285F4"/><path d="M13.02 14.43L2.3 3.7.54 5.15l11.12 11.12 1.36-1.84z" fill="#34A853"/></svg>
+        <div class="btn-store-text" style="color:#1a1a1a"><small style="color:#555">Get it on</small><strong>Google Play</strong></div>
+      </a>
+    </div>
+    <p class="store-hero-note">Free to download · iOS &amp; Android · Privacy-first design</p>
+  </section>
+
+  <!-- TRUST BAR -->
+  <div class="trust-bar">
+    <div class="trust-item">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+      AI-Powered Detection
+    </div>
+    <div class="trust-item">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
+      Real-Time Scam Alerts
+    </div>
+    <div class="trust-item">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
+      Privacy-First
+    </div>
+    <div class="trust-item">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+      Trusted by Families
+    </div>
+    <div class="trust-item">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg>
+      Threat Intelligence
+    </div>
+  </div>
+
+  <!-- APP SCREENSHOTS -->
+  <section id="screenshots">
+    <div class="screenshots-header">
+      <div class="section-label">See It In Action</div>
+      <h2 class="section-title">Everything You Need,<br>Built Right In</h2>
+      <p class="section-sub">From instant scam scanning to live threat maps — GuardianAI puts powerful protection in your pocket.</p>
+    </div>
+
+    <div class="phone-showcase" id="phoneShowcase">
+      <div class="phone-frame">
+        <div class="phone-shell">
+          <img src="Home_Screen.png" alt="GuardianAI Home Screen" loading="lazy" />
+        </div>
+        <span class="phone-label">Home</span>
+      </div>
+      <div class="phone-frame">
+        <div class="phone-shell">
+          <img src="Scanner.png" alt="Scan & Analyze" loading="lazy" />
+        </div>
+        <span class="phone-label">Scan &amp; Analyze</span>
+      </div>
+      <div class="phone-frame center">
+        <div class="phone-shell" style="border-color: rgba(53,208,192,0.6); box-shadow: 0 0 0 1px rgba(0,0,0,0.8), 0 30px 60px rgba(0,0,0,0.6), 0 0 60px rgba(53,208,192,0.25);">
+          <img src="Results.png" alt="Scan Results" loading="lazy" />
+        </div>
+        <span class="phone-label highlight">Scan Results</span>
+      </div>
+      <div class="phone-frame">
+        <div class="phone-shell">
+          <img src="Map_1.png" alt="Threat Map" loading="lazy" />
+        </div>
+        <span class="phone-label">Threat Map</span>
+      </div>
+      <div class="phone-frame">
+        <div class="phone-shell">
+          <img src="News.png" alt="Latest News" loading="lazy" />
+        </div>
+        <span class="phone-label">Latest News</span>
+      </div>
+      <div class="phone-frame">
+        <div class="phone-shell">
+          <img src="Scam_Sense.png" alt="Scam Sense Game" loading="lazy" />
+        </div>
+        <span class="phone-label">Scam Sense Game</span>
+      </div>
+    </div>
+
+    <div class="screenshots-dots">
+      <span class="active"></span><span></span><span></span><span></span><span></span><span></span>
+    </div>
+  </section>
+
+  <!-- FEATURES -->
+  <section id="features">
+    <div class="features-header">
+      <div class="section-label">What GuardianAI Does</div>
+      <h2 class="section-title">Everything You Need to<br>Stay One Step Ahead</h2>
+      <p class="section-sub" style="margin:0 auto;">Comprehensive AI protection that scans, analyzes, and alerts you to threats before they reach your wallet or identity.</p>
+    </div>
+    <div class="features-grid">
+      <div class="feature-card"><div class="feature-icon">🔍</div><h3>Instant Scam Scanner</h3><p>Paste any suspicious text, message, or email. GuardianAI returns a risk score, confidence level, and detailed explanation in seconds.</p></div>
+      <div class="feature-card"><div class="feature-icon">🔗</div><h3>Link &amp; URL Analysis</h3><p>Detect phishing URLs, spoofed websites, and malicious redirects before you ever click. Stay safe from lookalike domains.</p></div>
+      <div class="feature-card"><div class="feature-icon">📷</div><h3>QR Code Defense</h3><p>Scan QR codes safely. GuardianAI reveals the real destination and flags dangerous or deceptive links hidden behind them.</p></div>
+      <div class="feature-card"><div class="feature-icon">📞</div><h3>Phone Number Lookup</h3><p>Check if a phone number is linked to known scam operations, spoofed caller IDs, or fraud campaigns before you call back.</p></div>
+      <div class="feature-card"><div class="feature-icon">🗺️</div><h3>Threat Map</h3><p>See scam activity happening near you and around the world. Stay informed about trending fraud patterns in your region.</p></div>
+      <div class="feature-card"><div class="feature-icon">📰</div><h3>Latest Scam News</h3><p>Auto-curated scam and cyber threat headlines from trusted sources, updated continuously so you stay ahead of new tactics.</p></div>
+      <div class="feature-card"><div class="feature-icon">🎮</div><h3>Scam Sense Game</h3><p>Train your brain to spot scams with Guardian Games. Real scenarios, Scam or Safe decisions — sharpen your fraud-spotting instincts.</p></div>
+      <div class="feature-card"><div class="feature-icon">🤖</div><h3>Ask GuardianAI</h3><p>Chat directly with GuardianAI for personalized advice on suspicious situations, reporting steps, and what to do next.</p></div>
+      <div class="feature-card"><div class="feature-icon">📚</div><h3>Learning Center</h3><p>Build scam awareness with guides that teach red flags, safe habits, and what to do when you've been targeted.</p></div>
+    </div>
+  </section>
+
+  <!-- HOW IT WORKS -->
+  <section id="how">
+    <div class="how-inner">
+      <div class="how-header">
+        <div class="section-label">Simple &amp; Fast</div>
+        <h2 class="section-title">How GuardianAI Works</h2>
+        <p class="section-sub" style="margin:0 auto;">Three steps between you and peace of mind.</p>
+      </div>
+      <div class="steps">
+        <div class="step">
+          <div class="step-num">1</div>
+          <div class="step-content">
+            <h3>Scan or Paste Suspicious Content</h3>
+            <p>Submit a message, link, phone number, email, or QR code. GuardianAI accepts text input and camera scans — whatever you have in front of you.</p>
+          </div>
+        </div>
+        <div class="step">
+          <div class="step-num">2</div>
+          <div class="step-content">
+            <h3>AI Analyzes &amp; Returns a Risk Score</h3>
+            <p>The AI engine evaluates the submission against known scam patterns, phishing databases, and threat intelligence — returning a clear risk rating with a 92%+ confidence score and detailed explanation.</p>
+          </div>
+        </div>
+        <div class="step">
+          <div class="step-num">3</div>
+          <div class="step-content">
+            <h3>Act With Confidence</h3>
+            <p>Get specific safety tips, see exactly what red flags were found, and take action — ignore, report, or share a warning — all from one screen.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- THREATS -->
+  <section id="threats">
+    <div class="threats-header">
+      <div class="section-label">Full-Spectrum Coverage</div>
+      <h2 class="section-title">Threats We Detect</h2>
+      <p class="section-sub" style="margin:0 auto;">GuardianAI is built to recognize the full range of modern scam and fraud tactics.</p>
+    </div>
+    <div class="threats-grid">
+      <div class="threat-pill"><span class="icon">📧</span><span>Phishing Emails</span></div>
+      <div class="threat-pill"><span class="icon">💬</span><span>Smishing (SMS Scams)</span></div>
+      <div class="threat-pill"><span class="icon">📞</span><span>Vishing (Phone Fraud)</span></div>
+      <div class="threat-pill"><span class="icon">🔗</span><span>Malicious Links</span></div>
+      <div class="threat-pill"><span class="icon">📷</span><span>Fake QR Codes</span></div>
+      <div class="threat-pill"><span class="icon">💸</span><span>Payment Scams</span></div>
+      <div class="threat-pill"><span class="icon">🏦</span><span>Bank Impersonation</span></div>
+      <div class="threat-pill"><span class="icon">🏛️</span><span>Government Impersonation</span></div>
+      <div class="threat-pill"><span class="icon">❤️</span><span>Romance Scams</span></div>
+      <div class="threat-pill"><span class="icon">💼</span><span>Job Offer Fraud</span></div>
+      <div class="threat-pill"><span class="icon">🎁</span><span>Prize &amp; Lottery Scams</span></div>
+      <div class="threat-pill"><span class="icon">🖥️</span><span>Tech Support Fraud</span></div>
+    </div>
+  </section>
+
+  <!-- CTA -->
+  <section id="cta">
+    <div class="section-label">Download Free</div>
+    <h2 class="section-title" style="margin:0 auto 16px;">Start Protecting Yourself<br>and Your Family Today</h2>
+    <p class="section-sub" style="margin:0 auto 40px;">Free to download. Advanced features with subscription. iOS &amp; Android.</p>
+    <div class="hero-actions">
+      <a href="https://apps.apple.com/us/app/guardianai-scam-defense/id6753998288" target="_blank" rel="noopener" class="btn-apple">
+        <svg width="26" height="26" viewBox="0 0 24 24" fill="white"><path d="M17.05 20.28c-.98.95-2.05.8-3.08.35-1.09-.46-2.09-.48-3.24 0-1.44.62-2.2.44-3.06-.35C2.79 15.25 3.51 7.7 9.05 7.4c1.35.07 2.29.74 3.08.8 1.18-.24 2.31-.93 3.57-.84 1.51.12 2.65.72 3.4 1.8-3.12 1.87-2.38 5.98.48 7.13-.57 1.39-1.32 2.76-2.54 4zm-3.11-17.6c.06 2.28-1.67 4.15-3.6 3.95-.27-1.97 1.73-4.12 3.6-3.95z"/></svg>
+        <div class="btn-store-text"><small>Download on the</small><strong>App Store</strong></div>
+      </a>
+      <a href="https://play.google.com/store/apps/details?id=com.guardianai" target="_blank" rel="noopener" class="btn-google">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none"><path d="M3.18 23.76c.3.17.64.24.99.2l12.6-12.6-3.17-3.16L3.18 23.76z" fill="#EA4335"/><path d="M20.28 11.49L17.6 9.9 14.43 6.7l2.7-2.7c.44-.44 1.15-.44 1.6 0l2.55 2.55c.44.44.44 1.16 0 1.6l-.99.84-.01.5z" fill="#FBBC04"/><path d="M2.5 1.08L14.43 13l-3.16 3.17L.5 5.66A.99.99 0 0 1 .5 4.09L2.5 1.08z" fill="#4285F4"/><path d="M13.02 14.43L2.3 3.7.54 5.15l11.12 11.12 1.36-1.84z" fill="#34A853"/></svg>
+        <div class="btn-store-text" style="color:#1a1a1a"><small style="color:#555">Get it on</small><strong>Google Play</strong></div>
+      </a>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer>
+    <div class="footer-inner">
+      <div class="footer-top">
+        <div class="footer-brand">
+          <a href="index.html" class="nav-logo" style="margin-bottom:12px; display:inline-flex;">
+            <img src="App_Icon.png" alt="GuardianAI" />
+            <span>GuardianAI</span>
+          </a>
+          <p>AI-powered scam and fraud defense for everyone. Scan. Verify. Stay Safe.</p>
+          <p style="margin-top:10px; font-size:0.82rem;">© 2026 Arty Fishall LLC. All rights reserved.</p>
+        </div>
+        <div class="footer-col">
+          <h4>App</h4>
+          <ul>
+            <li><a href="#features">Features</a></li>
+            <li><a href="#screenshots">Screenshots</a></li>
+            <li><a href="#how">How It Works</a></li>
+            <li><a href="https://apps.apple.com/us/app/guardianai-scam-defense/id6753998288" target="_blank" rel="noopener">App Store</a></li>
+            <li><a href="https://play.google.com/store/apps/details?id=com.guardianai" target="_blank" rel="noopener">Google Play</a></li>
+          </ul>
+        </div>
+        <div class="footer-col">
+          <h4>Legal</h4>
+          <ul>
+            <li><a href="privacy.html">Privacy Policy</a></li>
+            <li><a href="privacy.html#terms">Terms of Use</a></li>
+          </ul>
+        </div>
+        <div class="footer-col">
+          <h4>Connect</h4>
+          <ul>
+            <li><a href="contact.html">Contact Us</a></li>
+            <li><a href="https://www.facebook.com/people/Guardianai-Scam-Defense-App" target="_blank" rel="noopener">Facebook</a></li>
+            <li><a href="https://www.instagram.com/guardianaiapp" target="_blank" rel="noopener">Instagram</a></li>
+            <li><a href="mailto:guardian.ai.app@gmail.com">guardian.ai.app@gmail.com</a></li>
+          </ul>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <p>GuardianAI is an informational safety tool. Not legal, financial, or professional advice.</p>
+        <div class="social-links">
+          <a href="https://www.facebook.com/people/Guardianai-Scam-Defense-App" target="_blank" rel="noopener" title="Facebook">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"/></svg>
+          </a>
+          <a href="https://www.instagram.com/guardianaiapp" target="_blank" rel="noopener" title="Instagram">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="2" width="20" height="20" rx="5"/><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/></svg>
+          </a>
+          <a href="mailto:guardian.ai.app@gmail.com" title="Email">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+          </a>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    const toggle = document.getElementById('navToggle');
+    const links  = document.getElementById('navLinks');
+    toggle.addEventListener('click', () => links.classList.toggle('open'));
+
+    // Dot indicators sync with scroll
+    const showcase = document.getElementById('phoneShowcase');
+    const dots = document.querySelectorAll('.screenshots-dots span');
+    showcase.addEventListener('scroll', () => {
+      const idx = Math.round(showcase.scrollLeft / (showcase.scrollWidth / 6));
+      dots.forEach((d, i) => d.classList.toggle('active', i === Math.min(idx, 5)));
+    });
+    dots.forEach((d, i) => {
+      d.addEventListener('click', () => {
+        showcase.scrollTo({ left: (showcase.scrollWidth / 6) * i, behavior: 'smooth' });
+      });
+    });
+  </script>
+</body>
+</html>

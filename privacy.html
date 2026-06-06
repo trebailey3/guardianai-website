@@ -1,0 +1,528 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Privacy Policy & Terms of Use — GuardianAI</title>
+  <link rel="icon" href="App_Icon.png" type="image/png" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:ital,wght@0,300;0,400;0,500;1,300&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --navy:    #07111f;
+      --navy2:   #0c1a2e;
+      --navy3:   #0f2040;
+      --teal:    #35d0c0;
+      --teal2:   #2ae8c8;
+      --cyan:    #35d0ff;
+      --gold:    #f7c948;
+      --text:    #f0f4fb;
+      --muted:   #8fa8c8;
+      --border:  rgba(53,208,192,0.18);
+    }
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+    body {
+      font-family: 'DM Sans', sans-serif;
+      background: var(--navy);
+      color: var(--text);
+      overflow-x: hidden;
+      line-height: 1.7;
+    }
+
+    nav {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      z-index: 100;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 5vw;
+      height: 68px;
+      background: rgba(7,17,31,0.88);
+      backdrop-filter: blur(18px);
+      border-bottom: 1px solid var(--border);
+    }
+    .nav-logo { display: flex; align-items: center; gap: 11px; text-decoration: none; }
+    .nav-logo img { width: 34px; height: 34px; border-radius: 9px; }
+    .nav-logo span {
+      font-family: 'Syne', sans-serif;
+      font-weight: 800;
+      font-size: 1.2rem;
+      background: linear-gradient(120deg, var(--teal2), var(--cyan));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+    .nav-links { display: flex; align-items: center; gap: 28px; list-style: none; }
+    .nav-links a { text-decoration: none; color: var(--muted); font-size: 0.93rem; transition: color 0.2s; }
+    .nav-links a:hover { color: var(--teal2); }
+    .nav-back {
+      display: inline-flex; align-items: center; gap: 7px;
+      color: var(--teal2) !important; font-weight: 500 !important;
+    }
+
+    /* PAGE HEADER */
+    .page-header {
+      padding: 130px 6vw 60px;
+      text-align: center;
+      background: radial-gradient(ellipse 70% 60% at 50% 0%, rgba(53,208,192,0.14) 0%, transparent 65%);
+    }
+    .page-header .badge {
+      display: inline-block;
+      background: rgba(53,208,192,0.12);
+      border: 1px solid rgba(53,208,192,0.3);
+      color: var(--teal2);
+      font-size: 0.78rem;
+      font-weight: 700;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      padding: 6px 16px;
+      border-radius: 50px;
+      margin-bottom: 22px;
+    }
+    .page-header h1 {
+      font-family: 'Syne', sans-serif;
+      font-size: clamp(2rem, 5vw, 3.2rem);
+      font-weight: 800;
+      letter-spacing: -0.02em;
+      margin-bottom: 16px;
+    }
+    .page-header h1 span {
+      background: linear-gradient(120deg, var(--teal2), var(--cyan));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+    .page-header p { color: var(--muted); font-size: 1rem; }
+
+    /* TAB NAV */
+    .tab-nav {
+      display: flex;
+      justify-content: center;
+      gap: 8px;
+      margin: 0 6vw 48px;
+      flex-wrap: wrap;
+    }
+    .tab-btn {
+      padding: 11px 28px;
+      border-radius: 50px;
+      border: 1.5px solid var(--border);
+      background: transparent;
+      color: var(--muted);
+      font-family: 'Syne', sans-serif;
+      font-size: 0.9rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: 0.2s;
+    }
+    .tab-btn.active {
+      background: linear-gradient(135deg, var(--teal), var(--cyan));
+      color: var(--navy);
+      border-color: transparent;
+    }
+    .tab-btn:hover:not(.active) {
+      border-color: var(--teal2);
+      color: var(--teal2);
+    }
+
+    /* MAIN CONTENT */
+    .doc-wrap {
+      max-width: 820px;
+      margin: 0 auto;
+      padding: 0 6vw 100px;
+    }
+    .tab-content { display: none; }
+    .tab-content.active { display: block; }
+
+    /* TOC */
+    .toc-card {
+      background: rgba(15,32,64,0.7);
+      border: 1px solid var(--border);
+      border-radius: 18px;
+      padding: 28px 32px;
+      margin-bottom: 36px;
+    }
+    .toc-card h3 {
+      font-family: 'Syne', sans-serif;
+      font-size: 0.85rem;
+      font-weight: 700;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--teal2);
+      margin-bottom: 16px;
+    }
+    .toc-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 8px 24px;
+    }
+    .toc-grid a {
+      color: var(--muted);
+      text-decoration: none;
+      font-size: 0.92rem;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      transition: color 0.2s;
+    }
+    .toc-grid a::before { content: '→'; color: var(--teal2); font-size: 0.8rem; }
+    .toc-grid a:hover { color: var(--teal2); }
+
+    /* SECTIONS */
+    .doc-section {
+      margin-bottom: 36px;
+      background: rgba(12,26,46,0.7);
+      border: 1px solid rgba(53,208,192,0.12);
+      border-radius: 18px;
+      padding: 32px 36px;
+    }
+    .doc-section:first-of-type { border-color: rgba(53,208,192,0.25); }
+    .doc-section h2 {
+      font-family: 'Syne', sans-serif;
+      font-size: 1.2rem;
+      font-weight: 700;
+      color: var(--teal2);
+      margin-bottom: 16px;
+      padding-bottom: 12px;
+      border-bottom: 1px solid rgba(53,208,192,0.15);
+    }
+    .doc-section h3 {
+      font-family: 'Syne', sans-serif;
+      font-size: 1rem;
+      font-weight: 600;
+      color: var(--gold);
+      margin: 20px 0 10px;
+    }
+    .doc-section p { color: var(--muted); font-size: 0.95rem; margin-bottom: 14px; line-height: 1.72; }
+    .doc-section p:last-child { margin-bottom: 0; }
+    .doc-section ul { padding-left: 20px; margin-top: 8px; }
+    .doc-section ul li { color: var(--muted); font-size: 0.95rem; margin-bottom: 8px; line-height: 1.6; }
+    .doc-section a { color: var(--teal2); }
+
+    .notice-box {
+      background: rgba(247,201,72,0.08);
+      border-left: 4px solid var(--gold);
+      border-radius: 12px;
+      padding: 18px 20px;
+      color: var(--text);
+      font-size: 0.95rem;
+      line-height: 1.65;
+      margin-top: 4px;
+    }
+
+    .meta-row {
+      display: flex;
+      gap: 32px;
+      flex-wrap: wrap;
+      margin-bottom: 28px;
+    }
+    .meta-item { font-size: 0.88rem; color: var(--muted); }
+    .meta-item strong { color: var(--text); }
+
+    /* FOOTER */
+    footer {
+      background: rgba(0,0,0,0.3);
+      border-top: 1px solid var(--border);
+      padding: 36px 6vw;
+      text-align: center;
+    }
+    footer p { color: var(--muted); font-size: 0.88rem; margin-bottom: 8px; }
+    footer a { color: var(--teal2); text-decoration: none; }
+    .footer-links { display: flex; gap: 24px; justify-content: center; flex-wrap: wrap; margin-bottom: 16px; }
+    .footer-links a { color: var(--muted); text-decoration: none; font-size: 0.88rem; transition: color 0.2s; }
+    .footer-links a:hover { color: var(--teal2); }
+
+    @media(max-width: 640px) {
+      .toc-grid { grid-template-columns: 1fr; }
+      .doc-section { padding: 22px 20px; }
+    }
+  </style>
+</head>
+<body>
+
+  <nav>
+    <a href="index.html" class="nav-logo">
+      <img src="App_Icon.png" alt="GuardianAI" />
+      <span>GuardianAI</span>
+    </a>
+    <ul class="nav-links">
+      <li><a href="index.html" class="nav-back">← Back to Home</a></li>
+      <li><a href="contact.html">Contact</a></li>
+    </ul>
+  </nav>
+
+  <div class="page-header">
+    <div class="badge">Legal Documents</div>
+    <h1>Privacy Policy &amp; <span>Terms of Use</span></h1>
+    <p>Effective Date: June 6, 2026 &nbsp;·&nbsp; Arty Fishall LLC &nbsp;·&nbsp; guardianai-defense.app</p>
+  </div>
+
+  <div class="tab-nav">
+    <button class="tab-btn active" onclick="switchTab('privacy', this)">Privacy Policy</button>
+    <button class="tab-btn" onclick="switchTab('terms', this)">Terms of Use</button>
+  </div>
+
+  <div class="doc-wrap">
+
+    <!-- PRIVACY POLICY TAB -->
+    <div id="tab-privacy" class="tab-content active">
+      <div class="meta-row">
+        <div class="meta-item"><strong>Effective Date:</strong> June 6, 2026</div>
+        <div class="meta-item"><strong>Company:</strong> Arty Fishall LLC</div>
+        <div class="meta-item"><strong>Website:</strong> <a href="https://guardianai-defense.app" style="color:var(--teal2);">guardianai-defense.app</a></div>
+      </div>
+
+      <div class="toc-card">
+        <h3>Contents</h3>
+        <div class="toc-grid">
+          <a href="#pp-intro">Overview</a>
+          <a href="#pp-collect">1. Information We Collect</a>
+          <a href="#pp-use">2. How We Use Information</a>
+          <a href="#pp-screenshots">3. Screenshots Blocked</a>
+          <a href="#pp-history">4. History & Saved Results</a>
+          <a href="#pp-sharing">5. How We Share Information</a>
+          <a href="#pp-ai">6. AI Processing</a>
+          <a href="#pp-retention">7. Data Retention</a>
+          <a href="#pp-security">8. Security</a>
+          <a href="#pp-subs">9. Subscriptions & Purchases</a>
+          <a href="#pp-third">10. Third-Party Services</a>
+          <a href="#pp-children">11. Children & Ages 13+</a>
+          <a href="#pp-choices">12. Your Choices</a>
+          <a href="#pp-changes">13. Policy Changes</a>
+        </div>
+      </div>
+
+      <div id="pp-intro" class="doc-section">
+        <h2>Privacy Policy</h2>
+        <p>This Privacy Policy explains how GuardianAI collects, uses, stores, and protects information when you use the GuardianAI mobile application, website, and related services.</p>
+        <p>GuardianAI is built with a privacy-first approach. We aim to collect only the information needed to operate the app, analyze suspicious content, prevent abuse, provide subscriptions, improve safety features, and support users.</p>
+      </div>
+
+      <div id="pp-collect" class="doc-section">
+        <h2>1. Information We Collect</h2>
+        <h3>Information You Provide</h3>
+        <p>When you use GuardianAI, you may voluntarily submit suspicious text, emails, links, QR code results, phone numbers, or other content for analysis. You may also contact us directly and provide your name, email address, or other support-related information.</p>
+        <h3>Scan and Analysis Content</h3>
+        <p>GuardianAI may process the content you submit so the app can provide a scam risk assessment, confidence score, explanation, safety tips, and related scam indicators. You should avoid submitting sensitive personal information unless necessary for analysis.</p>
+        <h3>App Usage and Technical Information</h3>
+        <p>We may collect limited technical information such as device type, operating system, app version, crash logs, usage events, subscription status, and basic diagnostics to keep GuardianAI working properly and improve reliability.</p>
+        <h3>Location Information</h3>
+        <p>If you use location-based features such as the Threat Map or scams near you, GuardianAI may request access to location information. Location access is optional and controlled by your device settings.</p>
+        <h3>Purchase and Subscription Information</h3>
+        <p>Subscriptions and in-app purchases are processed by Apple App Store or Google Play. GuardianAI may receive subscription status, product identifiers, transaction tokens, and related purchase verification information. We do not receive or store your full payment card details.</p>
+      </div>
+
+      <div id="pp-use" class="doc-section">
+        <h2>2. How We Use Information</h2>
+        <p>We use information to:</p>
+        <ul>
+          <li>Analyze suspicious content and provide scam risk results.</li>
+          <li>Show risk level, confidence score, scam indicators, and safety tips.</li>
+          <li>Operate app features such as History, Threat Map, Ask GuardianAI, Learning Center, News, and Guardian Games.</li>
+          <li>Verify subscription access and restore purchases.</li>
+          <li>Improve app performance, security, reliability, and user experience.</li>
+          <li>Detect abuse, troubleshoot crashes, and protect the service.</li>
+          <li>Respond to support requests and user questions.</li>
+        </ul>
+      </div>
+
+      <div id="pp-screenshots" class="doc-section">
+        <h2>3. Screenshots Blocked</h2>
+        <p>To protect your privacy, screenshots may be blocked or limited in certain areas of GuardianAI where sensitive scam analysis or account-related information may appear.</p>
+      </div>
+
+      <div id="pp-history" class="doc-section">
+        <h2>4. History and Saved Results</h2>
+        <p>GuardianAI may allow you to save or view past scan results in History. History is intended to help you review prior scam checks and share helpful warnings with family or friends. You may delete saved results where the app provides that option.</p>
+      </div>
+
+      <div id="pp-sharing" class="doc-section">
+        <h2>5. How We Share Information</h2>
+        <p>We do not sell your personal information. We may share limited information only as needed to operate GuardianAI, including with trusted service providers that help provide hosting, analytics, artificial intelligence analysis, crash reporting, subscription verification, security, or customer support.</p>
+        <p>When you choose to report a scam to a government agency, platform, financial institution, or other third party, you are responsible for reviewing what information is submitted. GuardianAI may help guide or prepare reports, but the final submission may occur outside the app.</p>
+        <p>We may disclose information if required by law, legal process, or to protect the rights, safety, and security of GuardianAI, our users, or others.</p>
+      </div>
+
+      <div id="pp-ai" class="doc-section">
+        <h2>6. Artificial Intelligence Processing</h2>
+        <p>GuardianAI uses AI and automated systems to help classify potential scams, explain why something may be dangerous, and provide safety recommendations. AI results may be inaccurate, incomplete, or unable to detect every threat. You should use GuardianAI as a safety assistant, not as a guaranteed fraud prevention system.</p>
+      </div>
+
+      <div id="pp-retention" class="doc-section">
+        <h2>7. Data Retention</h2>
+        <p>We keep information only as long as reasonably necessary to provide the app, operate subscriptions, improve safety features, comply with legal obligations, resolve disputes, and enforce our agreements. Some information may be retained in logs, backups, or records for a limited period.</p>
+      </div>
+
+      <div id="pp-security" class="doc-section">
+        <h2>8. Security</h2>
+        <p>We use reasonable administrative, technical, and organizational safeguards designed to protect information. No app, website, system, or transmission is completely secure. You are responsible for using strong device security and being cautious with suspicious content.</p>
+      </div>
+
+      <div id="pp-subs" class="doc-section">
+        <h2>9. Subscriptions &amp; Purchases</h2>
+        <p>GuardianAI may offer paid subscriptions, including monthly or annual plans, and may include a free trial where available. Subscription billing, renewals, cancellations, refunds, and payment issues are handled by Apple App Store or Google Play according to their terms and policies.</p>
+        <p>You can manage or cancel your subscription through your Apple App Store or Google Play account settings. Deleting the app does not automatically cancel your subscription.</p>
+      </div>
+
+      <div id="pp-third" class="doc-section">
+        <h2>10. Third-Party Services and Links</h2>
+        <p>GuardianAI may contain links to websites, agencies, app stores, articles, or other third-party resources. We are not responsible for the privacy practices, accuracy, content, or security of third-party services.</p>
+      </div>
+
+      <div id="pp-children" class="doc-section">
+        <h2>11. Children &amp; Ages 13+</h2>
+        <p>GuardianAI is intended for users age 13 and older. We do not knowingly collect personal information from children under 13. If we learn that we have collected personal information from a child under 13, we will take reasonable steps to delete it.</p>
+      </div>
+
+      <div id="pp-choices" class="doc-section">
+        <h2>12. Your Choices</h2>
+        <p>You may manage app permissions, including location and notifications, through your device settings. You may delete certain app data through available app features. You may also contact us with privacy requests or questions.</p>
+      </div>
+
+      <div id="pp-changes" class="doc-section">
+        <h2>13. Changes to This Privacy Policy</h2>
+        <p>We may update this Privacy Policy from time to time. When we make changes, we may update the effective date above. Continued use of GuardianAI after changes means you accept the updated policy.</p>
+      </div>
+    </div>
+
+    <!-- TERMS OF USE TAB -->
+    <div id="tab-terms" class="tab-content">
+      <div class="meta-row">
+        <div class="meta-item"><strong>Effective Date:</strong> June 6, 2026</div>
+        <div class="meta-item"><strong>Company:</strong> Arty Fishall LLC</div>
+      </div>
+
+      <div class="toc-card">
+        <h3>Contents</h3>
+        <div class="toc-grid">
+          <a href="#tu-intro">Overview</a>
+          <a href="#tu-use">1. Use of GuardianAI</a>
+          <a href="#tu-noguarantee">2. No Guarantee of Detection</a>
+          <a href="#tu-disclaimer">3. Important Disclaimer</a>
+          <a href="#tu-responsibilities">4. User Responsibilities</a>
+          <a href="#tu-subs">5. Subscriptions & Billing</a>
+          <a href="#tu-ip">6. Intellectual Property</a>
+          <a href="#tu-usercontent">7. User Content</a>
+          <a href="#tu-third">8. Third-Party Services</a>
+          <a href="#tu-availability">9. Availability & Changes</a>
+          <a href="#tu-termination">10. Termination</a>
+          <a href="#tu-liability">11. Limitation of Liability</a>
+          <a href="#tu-warranties">12. No Warranties</a>
+          <a href="#tu-law">13. Governing Law</a>
+          <a href="#tu-changes">14. Changes to Terms</a>
+        </div>
+      </div>
+
+      <div id="tu-intro" class="doc-section">
+        <h2>Terms of Use</h2>
+        <p>These Terms of Use govern your access to and use of GuardianAI. By using GuardianAI, you agree to these Terms. If you do not agree, do not use the app or services.</p>
+      </div>
+
+      <div id="tu-use" class="doc-section">
+        <h2>1. Use of GuardianAI</h2>
+        <p>GuardianAI provides scam detection, fraud awareness, AI-assisted analysis, educational content, safety tips, and related tools. You may use GuardianAI only for lawful, personal, non-commercial purposes unless we provide written permission otherwise.</p>
+      </div>
+
+      <div id="tu-noguarantee" class="doc-section">
+        <h2>2. No Guarantee of Scam Detection</h2>
+        <p>GuardianAI is designed to help identify suspicious activity, but no technology can detect every scam, fraud attempt, malicious link, dangerous QR code, spoofed number, phishing message, or social engineering tactic. Results may be wrong or incomplete.</p>
+        <p>You remain responsible for your decisions, including whether to click links, call numbers, send money, share personal information, report scams, or interact with suspicious content.</p>
+      </div>
+
+      <div id="tu-disclaimer" class="doc-section">
+        <h2>3. Important Disclaimer</h2>
+        <div class="notice-box">
+          GuardianAI does not provide legal, financial, banking, cybersecurity, law enforcement, medical, or professional advice. GuardianAI is an informational safety tool only. For urgent fraud, identity theft, account compromise, or financial loss, contact your bank, platform provider, law enforcement, or an appropriate professional immediately.
+        </div>
+      </div>
+
+      <div id="tu-responsibilities" class="doc-section">
+        <h2>4. User Responsibilities</h2>
+        <p>You agree not to misuse GuardianAI. You may not:</p>
+        <ul>
+          <li>Use GuardianAI for illegal, harmful, abusive, or fraudulent activity.</li>
+          <li>Submit content that you do not have the right to submit.</li>
+          <li>Attempt to reverse engineer, disrupt, overload, copy, or compromise the app or servers.</li>
+          <li>Use GuardianAI to harass, threaten, impersonate, or harm another person.</li>
+          <li>Bypass subscription access controls, rate limits, or security features.</li>
+        </ul>
+      </div>
+
+      <div id="tu-subs" class="doc-section">
+        <h2>5. Subscriptions, Trials, and Billing</h2>
+        <p>Some GuardianAI features may require a paid subscription. Subscription pricing, trial periods, renewal timing, cancellation options, and refund eligibility are shown through Apple App Store or Google Play at the time of purchase.</p>
+        <p>Subscriptions automatically renew unless canceled through your Apple or Google account settings before renewal. We do not control App Store or Google Play refund decisions.</p>
+      </div>
+
+      <div id="tu-ip" class="doc-section">
+        <h2>6. Intellectual Property</h2>
+        <p>GuardianAI, including its name, logo, design, app features, text, graphics, software, analysis format, and related content, is owned by Arty Fishall LLC or its licensors and is protected by intellectual property laws. You may not copy, modify, distribute, sell, or exploit GuardianAI without permission.</p>
+      </div>
+
+      <div id="tu-usercontent" class="doc-section">
+        <h2>7. User Content</h2>
+        <p>You retain ownership of content you submit to GuardianAI. By submitting content, you grant GuardianAI permission to process it for app functionality, analysis, safety, troubleshooting, security, and service improvement.</p>
+        <p>You are responsible for ensuring that any content you submit does not violate law, privacy rights, intellectual property rights, or third-party rights.</p>
+      </div>
+
+      <div id="tu-third" class="doc-section">
+        <h2>8. Third-Party Services</h2>
+        <p>GuardianAI may rely on third-party services, app stores, hosting providers, AI providers, analytics tools, advertising networks, or linked resources. We are not responsible for third-party services, outages, terms, content, or policies.</p>
+      </div>
+
+      <div id="tu-availability" class="doc-section">
+        <h2>9. Availability and Changes</h2>
+        <p>We may update, change, suspend, limit, or discontinue GuardianAI or any feature at any time. We may also impose reasonable usage limits to protect the service and users.</p>
+      </div>
+
+      <div id="tu-termination" class="doc-section">
+        <h2>10. Termination</h2>
+        <p>We may suspend or terminate access to GuardianAI if we believe you violated these Terms, misused the service, created security risk, failed to pay required fees, or used the app in a harmful or unlawful way.</p>
+      </div>
+
+      <div id="tu-liability" class="doc-section">
+        <h2>11. Limitation of Liability</h2>
+        <p>To the maximum extent permitted by law, Arty Fishall LLC and GuardianAI will not be liable for indirect, incidental, consequential, special, exemplary, or punitive damages, or for lost profits, lost data, financial losses, fraud losses, identity theft losses, or damages arising from your reliance on GuardianAI results.</p>
+      </div>
+
+      <div id="tu-warranties" class="doc-section">
+        <h2>12. No Warranties</h2>
+        <p>GuardianAI is provided "as is" and "as available" without warranties of any kind. We do not warrant that the app will be uninterrupted, error-free, fully accurate, secure, or able to detect every scam or threat.</p>
+      </div>
+
+      <div id="tu-law" class="doc-section">
+        <h2>13. Governing Law</h2>
+        <p>These Terms are governed by the laws of the State of Florida, without regard to conflict of law principles, unless a different law is required by applicable consumer protection law.</p>
+      </div>
+
+      <div id="tu-changes" class="doc-section">
+        <h2>14. Changes to These Terms</h2>
+        <p>We may update these Terms from time to time. Continued use of GuardianAI after the updated Terms become effective means you accept the changes.</p>
+      </div>
+    </div>
+
+  </div>
+
+  <footer>
+    <div class="footer-links">
+      <a href="index.html">Home</a>
+      <a href="contact.html">Contact</a>
+      <a href="mailto:guardian.ai.app@gmail.com">guardian.ai.app@gmail.com</a>
+    </div>
+    <p>© 2026 Arty Fishall LLC. All rights reserved.</p>
+    <p style="font-size:0.8rem; margin-top:8px;">This document should be reviewed by a qualified attorney before publication.</p>
+  </footer>
+
+  <script>
+    function switchTab(name, btn) {
+      document.querySelectorAll('.tab-content').forEach(t => t.classList.remove('active'));
+      document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+      document.getElementById('tab-' + name).classList.add('active');
+      btn.classList.add('active');
+      window.scrollTo({ top: 200, behavior: 'smooth' });
+    }
+  </script>
+</body>
+</html>
